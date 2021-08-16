@@ -1,19 +1,16 @@
 export default {
-  text: `#c9cacc`,
-  accent: `#eeeeee`,
-  background: `#1d1f21`,
-  primary: `#2bbc8a`,
-  secondary: `#A953C6`,
-  tertiary: `#666`,
+  accent: `#859900`,
+  primary: `#859900`,
+  secondary: `#2aa198`,
+  tertiary: `#b58900`,
   modes: {
     dark: {
-      // uses above defaults
+      background: `#002b36`,
+      text: `#839496`,
     },
     light: {
-      text: `#363533`,
-      accent: `#111111`,
-      background: `#e2e0de`,
-      primary: `#d44375`,
+      background: `#fdf6e3`,
+      text: `#657b83`,
     },
   },
 };

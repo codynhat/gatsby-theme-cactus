@@ -5,25 +5,17 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTag } from "@fortawesome/free-solid-svg-icons";
 
-import { SEO, Layout, BlogHeader, Underline } from "./";
+import { SEO, Layout, Underline } from "./";
 import formatTime from "../../utils/format-time";
 
 const shortcodes = { Underline };
 
-export default function Blog({ data: { blogPost, previous, next } }) {
+export default function Blog({ data: { blogPost } }) {
   return (
-    <Layout
-      header={
-        <BlogHeader
-          previous={previous}
-          next={next}
-          toc={blogPost.tableOfContents}
-        />
-      }
-    >
+    <Layout>
       <SEO title={blogPost.title} description={blogPost.excerpt} />
       <div sx={{ variant: `layout.post` }}>
-        <h2 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h2>
+        <h1 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h1>
         <div className="meta">
           <time dateTime={formatTime(blogPost.date)}>{blogPost.date}</time>
           <span>|</span>

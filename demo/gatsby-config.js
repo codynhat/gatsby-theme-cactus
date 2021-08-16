@@ -9,12 +9,29 @@ require(`dotenv`).config({
 
 module.exports = {
   siteMetadata: {
+    title: "Cactus",
     siteUrl: `https://gatsby-theme-cactus.netlify.app/`,
     lang: `en-GB`,
     social: [
       {
         name: `GitHub`,
-        url: `https://github.com/chrismwilliams/gatsby-theme-cactus`,
+        url: `https://github.com/codynhat`,
+      },
+      {
+        name: `Twitter`,
+        url: `https://twitter.com/codynhat`,
+      },
+      {
+        name: `LinkedIn`,
+        url: `https://www.linkedin.com/in/codyhatfield/`,
+      },
+      {
+        name: `RSS`,
+        url: `/atom.xml`,
+      },
+      {
+        name: `PGP`,
+        url: `/pgp.asc`,
       },
     ],
   },

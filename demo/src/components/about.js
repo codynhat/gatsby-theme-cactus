@@ -1,6 +1,5 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
-import Img from "gatsby-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
@@ -26,11 +25,6 @@ export default function About({ data }) {
         </a>
         . I’m particularly great for a personal web page with a simple blog.
       </p>
-      <Img
-        fluid={data.aboutImg.childImageSharp.fluid}
-        alt="Picture of a cactus"
-        sx={{ mx: `auto`, my: [4], maxWidth: 200 }}
-      />
       <p>These are my best features</p>
       <ul>
         <li>I am fully responsive</li>

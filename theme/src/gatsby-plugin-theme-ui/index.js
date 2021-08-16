@@ -8,11 +8,12 @@ import colors from "./colors";
 
 export default {
   useColorSchemeMediaQuery: true,
+  useLocalStorage: false,
   ...tailwind,
   colors,
   fonts: {
     ...tailwind.fonts,
-    body: `"Menlo", monospace`,
+    body: `Verdana,Helvetica,Arial,sans-serif`,
   },
   lineHeights: {
     body: `1.725`,
@@ -55,7 +56,7 @@ export default {
       margin: `0 auto 2rem`,
       width: `100%`,
       display: `grid`,
-      gridTemplateColumns: `50px auto`,
+      gridTemplateColumns: `75px auto`,
       gridTemplateRows: `repeat(2,1fr)`,
       gridColumnGap: 3,
       gridRowGap: 1,
@@ -68,8 +69,8 @@ export default {
       },
       ".logo": {
         gridRow: `span 2`,
-        width: 50,
-        height: 50,
+        width: 75,
+        height: 75,
         svg: {
           width: `100%`,
           height: `100%`,
@@ -158,6 +159,11 @@ export default {
             },
           },
         },
+      },
+    },
+    post: {
+      time: {
+        color: `tertiary`,
       },
     },
   },
