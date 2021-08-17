@@ -47,18 +47,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-sitemap`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `gatsby-theme-cactus`,
-        short_name: `gatsby-theme-cactus`,
-        start_url: `/`,
-        background_color: `#1d1f21`,
-        theme_color: `#2bbc8a`,
-        display: `standalone`,
-        icon: `content/assets/logo.png`, // This path is relative to the root of the site.
-      },
-    },
     `gatsby-plugin-offline`,
   ],
 };

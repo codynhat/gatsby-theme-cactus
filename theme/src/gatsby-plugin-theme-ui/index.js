@@ -5,6 +5,7 @@
 
 import tailwind from "@theme-ui/preset-tailwind";
 import colors from "./colors";
+import solarizedlight from "@theme-ui/prism/presets/prism-solarizedlight.json";
 
 export default {
   useColorSchemeMediaQuery: true,
@@ -35,8 +36,24 @@ export default {
         listStyleType: `none`,
       },
     },
+    code: {
+      ...solarizedlight,
+      backgroundColor: `codeBackground`,
+      color: `text`,
+    },
     p: {
+      textAlign: `justify`,
       hyphens: `auto`,
+      code: {
+        ...solarizedlight,
+        backgroundColor: `codeBackground`,
+        color: `text`,
+      },
+      a: {
+        ":hover": {
+          textDecoration: `none`,
+        },
+      },
     },
   },
   layout: {
@@ -106,7 +123,7 @@ export default {
         letterSpacing: `0.01em`,
         fontWeight: 700,
         fontStyle: `normal`,
-        fontSize: `1.5rem`,
+        fontSize: 5,
         lineHeight: `2rem`,
       },
       li: {
@@ -117,6 +134,83 @@ export default {
       a: {
         color: `text`,
         textDecoration: `none`,
+      },
+    },
+    post: {
+      time: {
+        color: `tertiary`,
+      },
+      ".meta": {
+        display: `flex`,
+        flexDirection: [`column`, `row`],
+        alignItems: [`flex-start`, `center`],
+        span: {
+          mx: 2,
+          display: [`none`, `initial`],
+        },
+        ".tags": {
+          display: `flex`,
+          alignItems: `center`,
+          ul: {
+            ml: 2,
+            display: `flex`,
+            flexWrap: `wrap`,
+            li: {
+              mr: 2,
+            },
+          },
+        },
+      },
+      ".md-body": {
+        mt: 4,
+        h1: {
+          mt: 4,
+          mb: 2,
+          position: `relative`,
+          color: `accent`,
+          fontSize: 4,
+        },
+        h2: {
+          mt: 4,
+          mb: 2,
+          position: `relative`,
+          color: `accent`,
+          fontSize: 2,
+        },
+        h3: {
+          mt: 4,
+          mb: 2,
+          position: `relative`,
+          color: `text`,
+          fontSize: 1,
+          textDecoration: `underline`,
+        },
+        pre: {
+          my: 4,
+          px: 3,
+          py: 2,
+          borderRadius: 3,
+        },
+        blockquote: {
+          my: 0,
+          mx: 2,
+          py: 2,
+          px: 3,
+          width: `50%`,
+          textAlign: `left`,
+          color: `secondary`,
+          fontWeight: `bold`,
+          quotes: `"\\201C" "\\201D" "\\2018" "\\2019"`,
+          "::before": {
+            verticalAlign: `-0.4em`,
+            lineHeight: `0.1em`,
+            content: `"\\201C"`,
+            fontSize: 3,
+          },
+          p: {
+            m: 0,
+          },
+        },
       },
     },
     footer: {
@@ -159,11 +253,6 @@ export default {
             },
           },
         },
-      },
-    },
-    post: {
-      time: {
-        color: `tertiary`,
       },
     },
   },
