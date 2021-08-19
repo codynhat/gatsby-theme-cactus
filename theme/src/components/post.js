@@ -18,15 +18,6 @@ export default function Blog({ data: { blogPost } }) {
         <h1 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h1>
         <div className="meta">
           <time dateTime={formatTime(blogPost.date)}>{blogPost.date}</time>
-          <span>|</span>
-          <div className="tags">
-            <FontAwesomeIcon icon={faTag} />
-            <Styled.ul>
-              {blogPost.tags.map((tag) => (
-                <li key={tag}>#{tag}</li>
-              ))}
-            </Styled.ul>
-          </div>
         </div>
         <MDXProvider components={shortcodes}>
           <div className="md-body">

@@ -1,5 +1,6 @@
 export default {
   background: `#fdf6e3`,
+  codeBackground: `#eee8d5`,
   text: `#657b83`,
   accent: `#859900`,
   primary: `#859900`,

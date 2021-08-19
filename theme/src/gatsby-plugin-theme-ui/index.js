@@ -29,13 +29,6 @@ export default {
       height: "100%",
       fontSize: 14,
     },
-    ul: {
-      margin: 0,
-      padding: 0,
-      li: {
-        listStyleType: `none`,
-      },
-    },
     code: {
       ...solarizedlight,
       backgroundColor: `codeBackground`,
