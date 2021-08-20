@@ -7,7 +7,7 @@ import {
   SEO,
   Layout,
   ToggleMode,
-} from "@chrismwilliams/gatsby-theme-cactus/src/components";
+} from "@codynhat/gatsby-theme-cactus/src/components";
 
 export default function About({ data }) {
   return (

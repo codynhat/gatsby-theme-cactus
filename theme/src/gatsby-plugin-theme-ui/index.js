@@ -48,6 +48,13 @@ export default {
         },
       },
     },
+    li: {
+      code: {
+        ...solarizedlight,
+        backgroundColor: `codeBackground`,
+        color: `text`,
+      },
+    },
   },
   layout: {
     pageWrapper: {
@@ -116,7 +123,7 @@ export default {
         letterSpacing: `0.01em`,
         fontWeight: 700,
         fontStyle: `normal`,
-        fontSize: 5,
+        fontSize: 3,
         lineHeight: `2rem`,
       },
       li: {
@@ -125,8 +132,13 @@ export default {
     },
     main: {
       a: {
-        color: `text`,
-        textDecoration: `none`,
+        color: `secondary`,
+        textDecoration: `underline`,
+      },
+      hr: {
+        border: `1px dashed #b58900`,
+        display: `block`,
+        my: 4,
       },
     },
     post: {

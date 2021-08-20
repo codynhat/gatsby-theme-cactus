@@ -2,8 +2,8 @@
 import { jsx, Styled } from "theme-ui";
 import { graphql, useStaticQuery, Link } from "gatsby";
 
-import { Underline } from "@chrismwilliams/gatsby-theme-cactus/src/components";
-import formateTime from "@chrismwilliams/gatsby-theme-cactus/utils/format-time";
+import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
+import formateTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
 
 export default function BlogList() {
   const { allBlogPost } = useStaticQuery(BlogListQuery);

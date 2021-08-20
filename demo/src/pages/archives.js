@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import { Posts as PostsPage } from "@chrismwilliams/gatsby-theme-cactus/src/components";
+import { Posts as PostsPage } from "@codynhat/gatsby-theme-cactus/src/components";
 
 export default PostsPage;
 

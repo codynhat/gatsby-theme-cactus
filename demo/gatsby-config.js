@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "@chrismwilliams/gatsby-theme-cactus",
+      resolve: "@codynhat/gatsby-theme-cactus",
       options: {},
     },
     {

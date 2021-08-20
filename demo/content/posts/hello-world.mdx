@@ -1,35 +1,178 @@
 ---
-slug: "/blog/demo-post"
-date: "2020-01-25"
-title: "Hello World"
-excerpt: "Example Hello World Blog Post"
-tags: ["example", "first", "post"]
+title: Backup Your iOS Devices to a Private IPFS Node
+date: 2020-03-25 08:44:31
+updated: 2020-04-07 11:42:00
+excerpt: Command line utility to backup iOS devices to an embedded and private IPFS node.
+tags:
 ---
 
-Hello world!!! This is an example blog post showcasing some of the cool stuff this theme can do. Following is an example blog post written in an mdx file. You can find me @ `demo/content/posts/my-first-post.mdx`. Here you can add/update/delete details and watch the changes live when running in develop mode.
+_**Update 2020-04-07**: This has now been built into a single command line tool. Installation and usage can be found on [Github](https://github.com/codynhat/ipfs-ios-backup)._
 
-## Using MDX to create blog pages
+---
 
-You can find out more about mdx and how to use it with Gatsby on <Underline themeColor="text" hoverThemeColor="secondary">[mdxjs](https://mdxjs.com/getting-started "MDX JS getting started")</Underline>'s website, and here with <Underline themeColor="text" hoverThemeColor="secondary">[Gatsby docs](https://www.gatsbyjs.org/docs/mdx/ "Gatsby docs on mdx")</Underline>.
+There are various reasons you may want to backup your iOS device somewhere [other than iCloud](https://www.reuters.com/article/us-apple-fbi-icloud-exclusive/exclusive-apple-dropped-plan-for-encrypting-backups-after-fbi-complained-sources-idUSKBN1ZK1CT).
 
-### Using some markdown elements
+This post describes how to perform manual backups of your iOS device over USB or WiFi to a local IPFS node via the command line.
 
-Here we have a simple js code block.
+**Script available**: A script is available on [Github](https://github.com/codynhat/ipfs-ios-backup) that automates much of this process.
 
-```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
+## You will need
+* Knowledge of basic IPFS concepts
+* Basic command line knowledge
+* An iOS device
+* Locally running IPFS node
+* Mac, Linux, or Windows computer*
+
+*This has only been tested on Mac, but the dependencies should work across all platforms
+
+## Setting up a private IPFS node
+[IPFS Desktop](https://github.com/ipfs-shipyard/ipfs-desktop) is what I use to run a local IPFS. But there are many [other ways](https://docs.ipfs.io/guides/guides/install/) to do this as well.
+
+**IMPORTANT**: It is highly recommended to use a private IPFS node. Following this tutorial will encrypt your backup, but it **will not** encrypt metadata for your backup. This metadata contains potentially sensitive information, including the phone number and list of apps installed on your device. See [this issue](https://github.com/codynhat/ipfs-ios-backup/issues/1) for more information.
+
+Ensuring your IPFS node will only connect to peers that you trust will prevent this unencrypted metadata from being available to others on the public IPFS network. For more information about private networks, see [this](https://github.com/ipfs/go-ipfs/blob/master/docs/experimental-features.md#private-networks).
+
+You can simply generate a swarm key
+```
+go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen
+ipfs-swarm-key-gen > ~/.ipfs/swarm.key
 ```
 
-This is styled by <Underline themeColor="text" hoverThemeColor="secondary">[Prism](https://prismjs.com/ "Prism website")</Underline> via a package from <Underline themeColor="text" hoverThemeColor="secondary">[Theme UI](https://theme-ui.com/packages/prism "Theme UI prism package")</Underline>.
+And remove all peers from the bootstrap list
+```
+ipfs bootstrap rm --all
+```
 
-You can choose your own preset from this package, currently it's set to Dracula, in the shadowed file `demo/src/gatsby-plugin-theme-ui/index.js`.
+This will create a private network where your local node is the sole member. In future tutorials, I will show how this network may be expanded so your backups may be stored on multiple computers that you own.
 
-## Importing images with mdx
+## 1. Install Dependencies
 
-Gatsby Theme Cactus uses another theme called Gatsby Theme Blog Core to read MDX files, and embedded images.
+The only dependency needed is [libimobiledevice](http://www.libimobiledevice.org/), a cross-platform library that enables communication with iOS devices.
 
-![Early morning mountain range](../assets/landscape.jpg "Mountain range")
+### Homebrew
 
-> I'm a simple block quote.
-> I'm styled in the shadowed file ~ demo/src/gatsby-plugin-theme-ui/index.js.
+The easiest installation method for macOS is using [Homebrew](https://formulae.brew.sh/formula/libimobiledevice#default). This package has not had a formal release for quite some time. I recommend installing from the latest `HEAD` to avoid issues that have been fixed.
+
+```
+brew install libimobiledevice --HEAD
+```
+
+### Compiling from source
+
+If the Homebrew solution does not work for you on macOS or you are installing on Linux or Windows, you will need to compile the package from source. Build instructions can be found [here](https://github.com/libimobiledevice/libimobiledevice#libimobiledevice).
+
+### Enable WiFi backups
+
+At the time of writing, `HEAD` does not support performing backups over WiFi. I have [opened a PR](https://github.com/libimobiledevice/libimobiledevice/pull/920) with a simple change to enable this. If this is still not merged and you would like to use WiFi, try building from [this fork](https://github.com/codynhat/libimobiledevice).
+
+## 2. Pair your device
+
+Once you have installed libimobiledevice, the first step is to see if your device can be discovered.
+
+```
+idevice_id -l -n
+```
+
+This will search and list the device identifiers for all devices connected via USB or WiFi.
+
+If you have never connected this device to your computer, you may need to pair it first. See if the device is already paired by running
+
+```
+idevicepair -u $DEVICE_UDID validate
+```
+
+If it is not paired, initiate the pairing process
+
+```
+idevicepair -u $DEVICE_UDID pair
+```
+
+You should see a dialog show up on your device asking to "trust this computer". Choose "Trust" and enter in your passcode if prompted.
+
+If you need to distinguish between multiple connected devices, try getting more info about a device using `ideviceinfo`. For example,
+
+```
+ideviceinfo -u $DEVICE_UDID -k DeviceName
+```
+
+will print out the device name.
+
+## 3. Enable encryption
+
+Before performing a backup, it is highly recommended to enable encryption.
+
+```
+idevicebackup2 -u $DEVICE_UDID encryption on -i
+```
+
+You should be prompted to enter a password for the backup. This encryption is using the standard iTunes backup encryption provided by Apple. See the [Apple Platform Security Guide](https://support.apple.com/guide/security/backup-keybag-sec21f866332/web) for more details.
+
+## 4. Perform backup
+
+We will now perform the backup to the local filesystem. You will need to specify a `BACKUP_PATH`. There are two different methods here to choose from:
+
+1. Backup to `BACKUP_PATH` *temporarily* and copy to IPFS as blocks (slower)
+2. Backup to `BACKUP_PATH` *permanently* and add to IPFS via filestore (faster)
+
+**Option 1** is a simple solution that uses the normal IPFS usage patterns you are probably familiar with. However, this will result in the entire backup being saved to the local filesystem and then copied into IPFS. I have found performance *significantly* increases if you use the filestore instead.
+
+**Option 2** uses the [filestore](https://github.com/ipfs/go-ipfs/issues/875), an experimental feature that allows IPFS to reference files being added instead of copying them. Because we are dealing with such large files, this will significantly improve performance. However, be aware that the backup must live somewhere permanently on the local filesystem. If these files are modified in any way, things will break.
+
+You can enable the filestore by making a change to your IPFS config:
+
+```
+ipfs config --json Experimental.FilestoreEnabled true
+```
+
+Now, perform the backup
+
+```
+idevicebackup2 -u $DEVICE_UDID backup $BACKUP_PATH
+```
+
+This may take some time.
+
+## 5. Save backup to IPFS
+
+Once the backup is complete, we can now add it to IPFS. As mentioned previously, there are two options.
+
+### Option 1
+
+Copy the backup to IPFS
+
+```
+ipfs add -r "${BACKUP_PATH}/${DEVICE_UDID}"
+```
+
+Clean up the temporary backup
+```
+rm -r $BACKUP_PATH
+```
+
+### Option 2
+
+Add the backup to the IPFS filestore using `--nocopy`
+
+```
+ipfs add --nocopy -r "${BACKUP_PATH}/${DEVICE_UDID}"
+```
+
+## 6. Keep track of your backups
+
+Once the backup has been added to IPFS, I find it useful to keep track of different backups using [MFS](https://docs-beta.ipfs.io/concepts/file-systems/#mutable-file-system-mfs) (Mutable File System). I keep a directory called `ios-backups` at the root of MFS. 
+
+```
+ipfs files mkdir /ios-backups
+```
+
+This directory contains a list of files named by `DEVICE_UDID` with the contents being the CID of the latest backup for that device.
+
+```
+echo "${CID}" | ipfs files write --create /ios-backups/${DEVICE_UDID}
+```
+
+## That's it!
+
+If you have any issues or questions, feel free to reach out and [create an issue](https://github.com/codynhat/ipfs-ios-backup/issues/new).
+
+Also check out [Github](https://github.com/codynhat/ipfs-ios-backup) to find a script that automates most of this process.

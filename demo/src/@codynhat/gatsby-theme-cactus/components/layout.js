@@ -5,7 +5,7 @@ import {
   Global,
   Footer,
   Header as DefaultHeader,
-} from "@chrismwilliams/gatsby-theme-cactus/src/components";
+} from "@codynhat/gatsby-theme-cactus/src/components";
 
 export default function DemoLayout({ header, children }) {
   return (
