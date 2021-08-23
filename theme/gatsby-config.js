@@ -46,6 +46,13 @@ module.exports = (themeOptions) => {
           name: options.contentPath,
         },
       },
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: options.assetPath,
+          name: options.assetPath,
+        },
+      },
       `gatsby-transformer-sharp`,
       `gatsby-plugin-sharp`,
       `gatsby-plugin-image`,
