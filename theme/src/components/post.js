@@ -16,16 +16,24 @@ export default function Blog({ data: { blogPost } }) {
       <SEO title={blogPost.title} description={blogPost.excerpt} />
       <div sx={{ variant: `layout.post` }}>
         <h1 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h1>
-        <div className="meta">
-          <time dateTime={formatTime(blogPost.date)}>
-            {formatTime(blogPost.date)}
-          </time>
-        </div>
+
         <MDXProvider components={shortcodes}>
           <div className="md-body">
             <MDXRenderer>{blogPost.body}</MDXRenderer>
           </div>
         </MDXProvider>
+        <hr />
+        <h2>Note Metadata</h2>
+        <div className="meta">
+          <ul>
+            <li>
+              Created:{" "}
+              <time dateTime={formatTime(blogPost.date)}>
+                {formatTime(blogPost.date)}
+              </time>
+            </li>
+          </ul>
+        </div>
       </div>
     </Layout>
   );

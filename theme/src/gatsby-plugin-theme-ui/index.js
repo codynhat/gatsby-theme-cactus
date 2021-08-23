@@ -151,9 +151,6 @@ export default {
       },
     },
     post: {
-      time: {
-        color: `tertiary`,
-      },
       ".meta": {
         display: `flex`,
         flexDirection: [`column`, `row`],
@@ -172,6 +169,13 @@ export default {
             li: {
               mr: 2,
             },
+          },
+        },
+        ul: {
+          margin: 0,
+          padding: 0,
+          li: {
+            listStyleType: `none`,
           },
         },
       },
