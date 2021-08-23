@@ -17,7 +17,9 @@ export default function Blog({ data: { blogPost } }) {
       <div sx={{ variant: `layout.post` }}>
         <h1 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h1>
         <div className="meta">
-          <time dateTime={formatTime(blogPost.date)}>{blogPost.date}</time>
+          <time dateTime={formatTime(blogPost.date)}>
+            {formatTime(blogPost.date)}
+          </time>
         </div>
         <MDXProvider components={shortcodes}>
           <div className="md-body">

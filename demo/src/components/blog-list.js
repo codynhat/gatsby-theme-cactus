@@ -3,7 +3,7 @@ import { jsx, Styled } from "theme-ui";
 import { graphql, useStaticQuery, Link } from "gatsby";
 
 import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
-import formateTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
+import formatTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
 
 export default function BlogList() {
   const { allBlogPost } = useStaticQuery(BlogListQuery);
@@ -18,11 +18,11 @@ export default function BlogList() {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
               <time
-                dateTime={formateTime(node.date)}
+                dateTime={formatTime(node.date)}
                 sx={{ mr: 3, color: `tertiary` }}
               >
                 {" "}
-                {node.date}
+                {formatTime(node.date)}
               </time>
               <Underline themeColor="text" hoverThemeColor="secondary">
                 <Link to={`${node.slug}`} sx={{ variant: `links.underline` }}>
