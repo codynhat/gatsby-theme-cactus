@@ -141,6 +141,15 @@ export default {
         my: 4,
       },
     },
+    index: {
+      ul: {
+        margin: 0,
+        padding: 0,
+        li: {
+          listStyleType: `none`,
+        },
+      },
+    },
     post: {
       time: {
         color: `tertiary`,
@@ -219,6 +228,15 @@ export default {
         a: {
           color: `secondary`,
           textDecoration: `underline`,
+        },
+      },
+    },
+    posts: {
+      ul: {
+        margin: 0,
+        padding: 0,
+        li: {
+          listStyleType: `none`,
         },
       },
     },

@@ -12,7 +12,7 @@ export default function Posts({ data: { allBlogPost } }) {
         title="Archives"
         description="Collection of all my blogs in one place"
       />
-      <div className="blog-post">
+      <div className="blog-post" sx={{ variant: `layout.posts` }}>
         <h2 sx={{ mt: 0 }}>Archives</h2>
         <Styled.ul>
           {allBlogPost.edges.map(({ node }) => {
@@ -22,7 +22,7 @@ export default function Posts({ data: { allBlogPost } }) {
                   dateTime={formatTime(node.date)}
                   sx={{ mr: [3], color: `tertiary` }}
                 >
-                  {node.date}
+                  {formatTime(node.date)}
                 </time>
                 <Underline themeColor="text" hoverThemeColor="secondary">
                   <Link to={node.slug} sx={{ variant: `links.underline` }}>
