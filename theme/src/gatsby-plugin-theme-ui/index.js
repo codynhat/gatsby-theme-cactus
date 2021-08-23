@@ -132,8 +132,8 @@ export default {
     },
     main: {
       a: {
-        color: `secondary`,
-        textDecoration: `underline`,
+        color: `text`,
+        textDecoration: `none`,
       },
       hr: {
         border: `1px dashed #b58900`,
@@ -215,6 +215,10 @@ export default {
           p: {
             m: 0,
           },
+        },
+        a: {
+          color: `secondary`,
+          textDecoration: `underline`,
         },
       },
     },
