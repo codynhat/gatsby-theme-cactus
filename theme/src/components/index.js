@@ -6,5 +6,5 @@ export { default as Footer } from "./footer";
 export { default as Underline } from "./underline";
 export { default as ToggleMode } from "./toggle-mode";
 export { default as TOC } from "./toc";
-export { default as Posts } from "./posts";
-export { default as Post } from "./post";
+export { default as Notes } from "./notes";
+export { default as Note } from "./note";

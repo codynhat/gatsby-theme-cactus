@@ -5,17 +5,17 @@ import { Link } from "gatsby";
 import { SEO, Layout, Underline } from "./";
 import formatTime from "../../utils/format-time";
 
-export default function Posts({ data: { allBlogPost } }) {
+export default function Notes({ data: { allNote } }) {
   return (
     <Layout>
       <SEO
         title="Archives"
-        description="Collection of all my blogs in one place"
+        description="Collection of all my notes in one place"
       />
-      <div className="blog-post" sx={{ variant: `layout.posts` }}>
+      <div className="note" sx={{ variant: `layout.notes` }}>
         <h2 sx={{ mt: 0 }}>Archives</h2>
         <Styled.ul>
-          {allBlogPost.edges.map(({ node }) => {
+          {allNote.edges.map(({ node }) => {
             return (
               <li key={node.id} sx={{ mb: 4 }}>
                 <time

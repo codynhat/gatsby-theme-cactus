@@ -1,12 +1,12 @@
 import { graphql } from "gatsby";
 
-import { Posts as PostsPage } from "../components";
+import { Notes as NotesPage } from "../components";
 
-export default PostsPage;
+export default NotesPage;
 
 export const query = graphql`
-  query PostsQuery {
-    allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+  query NotesQuery {
+    allNote(sort: { fields: [date, title], order: DESC }, limit: 1000) {
       edges {
         node {
           id

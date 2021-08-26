@@ -29,26 +29,22 @@ exports.onPreBootstrap = ({ store }, themeOptions) => {
   });
 };
 
-const mdxResolverPassthrough = (fieldName) => async (
-  source,
-  args,
-  context,
-  info
-) => {
-  const type = info.schema.getType(`Mdx`);
-  const mdxNode = context.nodeModel.getNodeById({
-    id: source.parent,
-  });
-  const resolver = type.getFields()[fieldName].resolve;
-  const result = await resolver(mdxNode, args, context, {
-    fieldName,
-  });
-  return result;
-};
+const mdxResolverPassthrough =
+  (fieldName) => async (source, args, context, info) => {
+    const type = info.schema.getType(`Mdx`);
+    const mdxNode = context.nodeModel.getNodeById({
+      id: source.parent,
+    });
+    const resolver = type.getFields()[fieldName].resolve;
+    const result = await resolver(mdxNode, args, context, {
+      fieldName,
+    });
+    return result;
+  };
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
-  createTypes(`interface BlogPost @nodeInterface {
+  createTypes(`interface Note @nodeInterface {
       id: ID!
       title: String!
       body: String!
@@ -61,7 +57,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
   createTypes(
     schema.buildObjectType({
-      name: `MdxBlogPost`,
+      name: `MdxNote`,
       fields: {
         id: { type: `ID!` },
         title: {
@@ -91,7 +87,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: mdxResolverPassthrough(`body`),
         },
       },
-      interfaces: [`Node`, `BlogPost`],
+      interfaces: [`Node`, `Note`],
       extensions: {
         infer: false,
       },
@@ -99,7 +95,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
   );
 };
 
-// Create fields for post slugs and source
+// Create fields for note slugs and source
 // This will change with schema customization with work
 exports.onCreateNode = async (
   { node, actions, getNode, createNodeId, store, cache },
@@ -147,27 +143,27 @@ exports.onCreateNode = async (
       date: node.frontmatter.date,
     };
 
-    const mdxBlogPostId = createNodeId(`${node.id} >>> MdxBlogPost`);
+    const mdxNoteId = createNodeId(`${node.id} >>> MdxNote`);
     await createNode({
       ...fieldData,
       // Required fields.
-      id: mdxBlogPostId,
+      id: mdxNoteId,
       parent: node.id,
       children: [],
       internal: {
-        type: `MdxBlogPost`,
+        type: `MdxNote`,
         contentDigest: createContentDigest(fieldData),
         content: JSON.stringify(fieldData),
-        description: `Mdx implementation of the BlogPost interface`,
+        description: `Mdx implementation of the Note interface`,
       },
     });
-    createParentChildLink({ parent: node, child: getNode(mdxBlogPostId) });
+    createParentChildLink({ parent: node, child: getNode(mdxNoteId) });
   }
 };
 
 // These templates are simply data-fetching wrappers that import components
-const PostTemplate = require.resolve(`./src/templates/post`);
-const PostsTemplate = require.resolve(`./src/templates/posts`);
+const NoteTemplate = require.resolve(`./src/templates/note`);
+const NotesTemplate = require.resolve(`./src/templates/notes`);
 
 exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   const { createPage } = actions;
@@ -175,7 +171,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const result = await graphql(`
     {
-      allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+      allNote(sort: { fields: [date, title], order: DESC }, limit: 1000) {
         edges {
           node {
             id
@@ -190,30 +186,30 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
     reporter.panic(result.errors);
   }
 
-  // Create Posts and Post pages.
-  const { allBlogPost } = result.data;
-  const posts = allBlogPost.edges;
+  // Create Notes and Note pages.
+  const { allNote } = result.data;
+  const notes = allNote.edges;
 
-  // Create a page for each Post
-  posts.forEach(({ node: post }, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1];
-    const next = index === 0 ? null : posts[index - 1];
-    const { slug } = post;
+  // Create a page for each Note
+  notes.forEach(({ node: note }, index) => {
+    const previous = index === notes.length - 1 ? null : notes[index + 1];
+    const next = index === 0 ? null : notes[index - 1];
+    const { slug } = note;
     createPage({
       path: slug,
-      component: PostTemplate,
+      component: NoteTemplate,
       context: {
-        id: post.id,
+        id: note.id,
         previousId: previous ? previous.node.id : undefined,
         nextId: next ? next.node.id : undefined,
       },
     });
   });
 
-  // Create the Posts page
+  // Create the Notes page
   createPage({
     path: basePath,
-    component: PostsTemplate,
+    component: NotesTemplate,
     context: {},
   });
 };

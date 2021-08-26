@@ -6,7 +6,7 @@ import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
 import formatTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
 
 export default function RecentList() {
-  const { allBlogPost } = useStaticQuery(RecentListQuery);
+  const { allNote } = useStaticQuery(RecentListQuery);
 
   return (
     <section>
@@ -14,7 +14,7 @@ export default function RecentList() {
         <h2 sx={{ variant: `title` }}>Recent Writing</h2>
       </Link>
       <Styled.ul>
-        {allBlogPost.edges.map(({ node }) => {
+        {allNote.edges.map(({ node }) => {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
               <time
@@ -39,7 +39,7 @@ export default function RecentList() {
 
 const RecentListQuery = graphql`
   query {
-    allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 10) {
+    allNote(sort: { fields: [date, title], order: DESC }, limit: 10) {
       edges {
         node {
           id

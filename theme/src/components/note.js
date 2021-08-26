@@ -10,16 +10,16 @@ import formatTime from "../../utils/format-time";
 
 const shortcodes = { Underline };
 
-export default function Blog({ data: { blogPost } }) {
+export default function Note({ data: { note } }) {
   return (
     <Layout>
-      <SEO title={blogPost.title} description={blogPost.excerpt} />
-      <div sx={{ variant: `layout.post` }}>
-        <h1 sx={{ variant: `title`, m: 0 }}>{blogPost.title}</h1>
+      <SEO title={note.title} description={note.excerpt} />
+      <div sx={{ variant: `layout.note` }}>
+        <h1 sx={{ variant: `title`, m: 0 }}>{note.title}</h1>
 
         <MDXProvider components={shortcodes}>
           <div className="md-body">
-            <MDXRenderer>{blogPost.body}</MDXRenderer>
+            <MDXRenderer>{note.body}</MDXRenderer>
           </div>
         </MDXProvider>
         <hr />
@@ -28,8 +28,8 @@ export default function Blog({ data: { blogPost } }) {
           <ul>
             <li>
               Created:{" "}
-              <time dateTime={formatTime(blogPost.date)}>
-                {formatTime(blogPost.date)}
+              <time dateTime={formatTime(note.date)}>
+                {formatTime(note.date)}
               </time>
             </li>
           </ul>

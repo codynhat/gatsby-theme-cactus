@@ -150,7 +150,7 @@ export default {
         },
       },
     },
-    post: {
+    note: {
       ".meta": {
         display: `flex`,
         flexDirection: [`column`, `row`],
@@ -235,7 +235,7 @@ export default {
         },
       },
     },
-    posts: {
+    notes: {
       ul: {
         margin: 0,
         padding: 0,
