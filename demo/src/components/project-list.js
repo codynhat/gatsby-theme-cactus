@@ -5,30 +5,24 @@ import { graphql, useStaticQuery, Link } from "gatsby";
 import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
 import formatTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
 
-export default function BlogList() {
-  const { allBlogPost } = useStaticQuery(BlogListQuery);
+export default function ProjectList() {
+  const { allBlogPost } = useStaticQuery(ProjectListQuery);
 
   return (
     <section>
       <Link to="/archives/" sx={{ variant: `links.secondary` }}>
-        <h2 sx={{ variant: `title` }}>Writings</h2>
+        <h2 sx={{ variant: `title` }}>Projects</h2>
       </Link>
       <Styled.ul>
         {allBlogPost.edges.map(({ node }) => {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
-              <time
-                dateTime={formatTime(node.date)}
-                sx={{ mr: 3, color: `tertiary` }}
-              >
-                {" "}
-                {formatTime(node.date)}
-              </time>
               <Underline themeColor="text" hoverThemeColor="secondary">
                 <Link to={`${node.slug}`} sx={{ variant: `links.underline` }}>
                   {node.title}
                 </Link>
               </Underline>
+              : {node.excerpt}
             </li>
           );
         })}
@@ -37,9 +31,12 @@ export default function BlogList() {
   );
 }
 
-const BlogListQuery = graphql`
+const ProjectListQuery = graphql`
   query {
-    allBlogPost(sort: { fields: [date, title], order: DESC }, limit: 50) {
+    allBlogPost(
+      sort: { fields: [date, title], order: DESC }
+      filter: { tags: { in: "project" } }
+    ) {
       edges {
         node {
           id
