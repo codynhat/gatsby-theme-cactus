@@ -36,8 +36,8 @@ export default function Note({ data: { mdx } }) {
           <ul>
             <li>
               Created:{" "}
-              <time dateTime={formatTime(mdx.date)}>
-                {formatTime(mdx.date)}
+              <time dateTime={formatTime(mdx.frontmatter.date)}>
+                {formatTime(mdx.frontmatter.date)}
               </time>
             </li>
           </ul>

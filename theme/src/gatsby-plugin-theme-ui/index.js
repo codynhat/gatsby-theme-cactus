@@ -33,6 +33,7 @@ export default {
       ...solarizedlight,
       backgroundColor: `codeBackground`,
       color: `text`,
+      overflow: `scroll`,
     },
     p: {
       textAlign: `justify`,
@@ -214,7 +215,7 @@ export default {
           mx: 2,
           py: 2,
           px: 3,
-          width: `50%`,
+          width: `80%`,
           textAlign: `left`,
           color: `secondary`,
           fontWeight: `bold`,
