@@ -10,16 +10,24 @@ import formatTime from "../../utils/format-time";
 
 const shortcodes = { Underline };
 
-export default function Note({ data: { note } }) {
+export default function Note({ data: { mdx } }) {
   return (
     <Layout>
-      <SEO title={note.title} description={note.excerpt} />
+      <SEO
+        title={mdx.frontmatter.title}
+        description={mdx.excerpt}
+        children={
+          mdx.frontmatter.canonicalUrl ? (
+            <link rel="canonical" href={mdx.frontmatter.canonicalUrl} />
+          ) : null
+        }
+      />
       <div sx={{ variant: `layout.note` }}>
-        <h1 sx={{ variant: `title`, m: 0 }}>{note.title}</h1>
+        <h1 sx={{ variant: `title`, m: 0 }}>{mdx.frontmatter.title}</h1>
 
         <MDXProvider components={shortcodes}>
           <div className="md-body">
-            <MDXRenderer>{note.body}</MDXRenderer>
+            <MDXRenderer>{mdx.body}</MDXRenderer>
           </div>
         </MDXProvider>
         <hr />
@@ -28,8 +36,8 @@ export default function Note({ data: { note } }) {
           <ul>
             <li>
               Created:{" "}
-              <time dateTime={formatTime(note.date)}>
-                {formatTime(note.date)}
+              <time dateTime={formatTime(mdx.date)}>
+                {formatTime(mdx.date)}
               </time>
             </li>
           </ul>

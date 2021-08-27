@@ -171,11 +171,16 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const result = await graphql(`
     {
-      allNote(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+      allMdx(
+        sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }
+        limit: 1000
+      ) {
         edges {
           node {
+            frontmatter {
+              slug
+            }
             id
-            slug
           }
         }
       }
@@ -187,21 +192,17 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   }
 
   // Create Notes and Note pages.
-  const { allNote } = result.data;
-  const notes = allNote.edges;
+  const { allMdx } = result.data;
+  const notes = allMdx.edges;
 
   // Create a page for each Note
   notes.forEach(({ node: note }, index) => {
-    const previous = index === notes.length - 1 ? null : notes[index + 1];
-    const next = index === 0 ? null : notes[index - 1];
-    const { slug } = note;
+    const { frontmatter } = note;
     createPage({
-      path: slug,
+      path: frontmatter.slug,
       component: NoteTemplate,
       context: {
         id: note.id,
-        previousId: previous ? previous.node.id : undefined,
-        nextId: next ? next.node.id : undefined,
       },
     });
   });
