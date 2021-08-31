@@ -4,9 +4,11 @@ import { graphql, useStaticQuery, Link } from "gatsby";
 
 import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
 import formatTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 export default function RecentList() {
-  const { allNote } = useStaticQuery(RecentListQuery);
+  const { allMdx } = useStaticQuery(RecentListQuery);
 
   return (
     <section>
@@ -14,19 +16,31 @@ export default function RecentList() {
         <h2 sx={{ variant: `title` }}>Recent Writing</h2>
       </Link>
       <Styled.ul>
-        {allNote.edges.map(({ node }) => {
+        {allMdx.edges.map(({ node }) => {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
               <time
-                dateTime={formatTime(node.date)}
+                dateTime={formatTime(node.frontmatter.date)}
                 sx={{ mr: 3, color: `tertiary` }}
               >
                 {" "}
-                {formatTime(node.date)}
+                {formatTime(node.frontmatter.date)}
               </time>
               <Underline themeColor="text" hoverThemeColor="secondary">
-                <Link to={`${node.slug}`} sx={{ variant: `links.underline` }}>
-                  {node.title}
+                {node.frontmatter.link ? (
+                  <span>
+                    <FontAwesomeIcon icon={faLink} size="sm" />{" "}
+                  </span>
+                ) : null}
+                <Link
+                  to={
+                    node.frontmatter.link
+                      ? node.frontmatter.link
+                      : node.frontmatter.slug
+                  }
+                  sx={{ variant: `links.underline` }}
+                >
+                  {node.frontmatter.title}
                 </Link>
               </Underline>
             </li>
@@ -39,15 +53,20 @@ export default function RecentList() {
 
 const RecentListQuery = graphql`
   query {
-    allNote(sort: { fields: [date, title], order: DESC }, limit: 10) {
+    allMdx(
+      sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
+      limit: 10
+    ) {
       edges {
         node {
           id
           excerpt
-          slug
-          title
-          date(formatString: "DD MMM YYYY")
-          tags
+          frontmatter {
+            title
+            slug
+            date(formatString: "DD MMMM, YYYY")
+            link
+          }
         }
       }
     }

@@ -5,15 +5,20 @@ export default NotesPage;
 
 export const query = graphql`
   query ArchiveQuery {
-    allNote(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+    allMdx(
+      sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
+      limit: 1000
+    ) {
       edges {
         node {
           id
-          slug
-          title
-          date(formatString: "DD MMM YYYY")
           excerpt
-          tags
+          frontmatter {
+            title
+            slug
+            date(formatString: "DD MMMM, YYYY")
+            link
+          }
         }
       }
     }

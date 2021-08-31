@@ -29,10 +29,16 @@ export default function Notes({ data: { allMdx } }) {
                 </time>
                 <Underline themeColor="text" hoverThemeColor="secondary">
                   {node.frontmatter.link ? (
-                    <FontAwesomeIcon icon={faLink} size="sm" />
+                    <span>
+                      <FontAwesomeIcon icon={faLink} size="sm" />{" "}
+                    </span>
                   ) : null}
                   <Link
-                    to={node.frontmatter.slug}
+                    to={
+                      node.frontmatter.link
+                        ? node.frontmatter.link
+                        : node.frontmatter.slug
+                    }
                     sx={{ variant: `links.underline` }}
                   >
                     {node.frontmatter.title}
