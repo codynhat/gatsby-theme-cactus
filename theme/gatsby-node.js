@@ -180,6 +180,7 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
             frontmatter {
               slug
             }
+            slug
             id
           }
         }
@@ -197,9 +198,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   // Create a page for each Note
   notes.forEach(({ node: note }, index) => {
-    const { frontmatter } = note;
+    const { frontmatter, slug } = note;
     createPage({
-      path: frontmatter.slug,
+      path: frontmatter.slug ?? slug,
       component: NoteTemplate,
       context: {
         id: note.id,
