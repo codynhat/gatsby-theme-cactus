@@ -3,9 +3,12 @@ import { jsx, Styled } from "theme-ui";
 import { Link } from "gatsby";
 
 import { SEO, Layout, Underline } from "./";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
+
 import formatTime from "../../utils/format-time";
 
-export default function Notes({ data: { allNote } }) {
+export default function Notes({ data: { allMdx } }) {
   return (
     <Layout>
       <SEO
@@ -15,18 +18,24 @@ export default function Notes({ data: { allNote } }) {
       <div className="note" sx={{ variant: `layout.notes` }}>
         <h2 sx={{ mt: 0 }}>Archives</h2>
         <Styled.ul>
-          {allNote.edges.map(({ node }) => {
+          {allMdx.edges.map(({ node }) => {
             return (
               <li key={node.id} sx={{ mb: 4 }}>
                 <time
-                  dateTime={formatTime(node.date)}
+                  dateTime={formatTime(node.frontmatter.date)}
                   sx={{ mr: [3], color: `tertiary` }}
                 >
-                  {formatTime(node.date)}
+                  {formatTime(node.frontmatter.date)}
                 </time>
                 <Underline themeColor="text" hoverThemeColor="secondary">
-                  <Link to={node.slug} sx={{ variant: `links.underline` }}>
-                    {node.title}
+                  {node.frontmatter.link ? (
+                    <FontAwesomeIcon icon={faLink} size="sm" />
+                  ) : null}
+                  <Link
+                    to={node.frontmatter.slug}
+                    sx={{ variant: `links.underline` }}
+                  >
+                    {node.frontmatter.title}
                   </Link>
                 </Underline>
                 <em

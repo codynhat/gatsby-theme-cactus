@@ -6,14 +6,20 @@ export default NotesPage;
 
 export const query = graphql`
   query NotesQuery {
-    allNote(sort: { fields: [date, title], order: DESC }, limit: 1000) {
+    allMdx(
+      sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
+      limit: 1000
+    ) {
       edges {
         node {
           id
           excerpt
-          slug
-          title
-          date(formatString: "DD MMMM, YYYY")
+          frontmatter {
+            title
+            slug
+            date(formatString: "DD MMMM, YYYY")
+            link
+          }
         }
       }
     }
