@@ -6991,6 +6991,14 @@ gatsby-remark-copy-linked-files@^2.3.5:
     probe-image-size "^6.0.0"
     unist-util-visit "^1.4.1"
 
+gatsby-remark-double-brackets-link@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-double-brackets-link/-/gatsby-remark-double-brackets-link-0.1.11.tgz#d506ad6216e5d8c8746e383c77e81f04e19291a7"
+  integrity sha512-fUUt7jywCrYAvjgkPnmkMJuVclJxOH1ibJm89HglbqpcSpwBYGzNEw7pDrXsxBM3QnFQxhQ58RACuLOpxKzGaA==
+  dependencies:
+    slugify "^1.5.3"
+    unist-util-visit "^2.0.0"
+
 gatsby-remark-images@^3.3.10:
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/gatsby-remark-images/-/gatsby-remark-images-3.11.1.tgz#41bff97bb412582ce01479d807d79f90a06ff382"
@@ -13158,7 +13166,7 @@ slice-ansi@^2.1.0:
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
 
-slugify@^1.4.4:
+slugify@^1.4.4, slugify@^1.5.3:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.0.tgz#6bdf8ed01dabfdc46425b67e3320b698832ff893"
   integrity sha512-FkMq+MQc5hzYgM86nLuHI98Acwi3p4wX+a5BO9Hhw4JdK4L7WueIiZ4tXEobImPqBz2sVcV0+Mu3GRB30IGang==

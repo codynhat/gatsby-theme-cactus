@@ -36,6 +36,13 @@ module.exports = (themeOptions) => {
                 withWebp: true,
               },
             },
+            {
+              resolve: `gatsby-remark-double-brackets-link`,
+              options: {
+                parseWikiLinks: true,
+                stripBrackets: true,
+              },
+            },
           ],
         },
       },

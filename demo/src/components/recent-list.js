@@ -36,7 +36,7 @@ export default function RecentList() {
                   to={
                     node.frontmatter.link
                       ? node.frontmatter.link
-                      : node.frontmatter.slug
+                      : node.frontmatter.slug ?? node.slug
                   }
                   sx={{ variant: `links.underline` }}
                 >
@@ -61,6 +61,7 @@ const RecentListQuery = graphql`
         node {
           id
           excerpt
+          slug
           frontmatter {
             title
             slug
