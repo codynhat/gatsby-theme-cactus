@@ -73,6 +73,10 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           type: `JSON!`,
           resolve: mdxResolverPassthrough(`tableOfContents`),
         },
+        html: {
+          type: `String`,
+          resolve: mdxResolverPassthrough(`html`),
+        },
         frontmatter: {
           type: `MdxFrontmatter!`,
           resolve: mdxResolverPassthrough(`frontmatter`),
