@@ -2,8 +2,6 @@
 import { jsx, Styled } from "theme-ui";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTag } from "@fortawesome/free-solid-svg-icons";
 
 import { SEO, Layout, Underline } from "./";
 import formatTime from "../../utils/format-time";
@@ -31,8 +29,8 @@ export default function Note({ data: { mdxNote } }) {
           </div>
         </MDXProvider>
         <hr />
-        <h2>Note Metadata</h2>
         <div className="meta">
+          <h2>Note Metadata</h2>
           <ul>
             <li>
               Created:{" "}

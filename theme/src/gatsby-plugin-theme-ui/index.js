@@ -153,28 +153,14 @@ export default {
     },
     note: {
       ".meta": {
-        display: `flex`,
-        flexDirection: [`column`, `row`],
-        alignItems: [`flex-start`, `center`],
-        span: {
-          mx: 2,
-          display: [`none`, `initial`],
-        },
-        ".tags": {
-          display: `flex`,
-          alignItems: `center`,
-          ul: {
-            ml: 2,
-            display: `flex`,
-            flexWrap: `wrap`,
-            li: {
-              mr: 2,
-            },
-          },
-        },
+        backgroundColor: `codeBackground`,
+        padding: 2,
+        paddingLeft: 3,
+        margin: 3,
+        borderRadius: ".5rem",
         ul: {
-          margin: 0,
-          padding: 0,
+          marginLeft: 0,
+          paddingLeft: 0,
           li: {
             listStyleType: `none`,
           },
