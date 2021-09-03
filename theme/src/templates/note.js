@@ -6,7 +6,7 @@ export default NotePage;
 
 export const noteQuery = graphql`
   query NoteQuery($id: String!) {
-    mdx(id: { eq: $id }) {
+    mdxNote(id: { eq: $id }) {
       id
       tableOfContents
       body

@@ -44,16 +44,6 @@ const mdxResolverPassthrough =
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
-  createTypes(`interface Note @nodeInterface {
-      id: ID!
-      title: String!
-      body: String!
-      slug: String!
-      date: Date! @dateformat
-      tags: [String]!
-      excerpt: String!
-      tableOfContents: JSON!
-  }`);
 
   createTypes(
     schema.buildObjectType({
@@ -82,12 +72,16 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           type: `JSON!`,
           resolve: mdxResolverPassthrough(`tableOfContents`),
         },
+        frontmatter: {
+          type: `MdxFrontmatter!`,
+          resolve: mdxResolverPassthrough(`frontmatter`),
+        },
         body: {
           type: `String!`,
           resolve: mdxResolverPassthrough(`body`),
         },
       },
-      interfaces: [`Node`, `Note`],
+      interfaces: [`Node`],
       extensions: {
         infer: false,
       },
@@ -171,15 +165,9 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
 
   const result = await graphql(`
     {
-      allMdx(
-        sort: { order: DESC, fields: [frontmatter___date, frontmatter___title] }
-        limit: 1000
-      ) {
+      allMdxNote(sort: { order: DESC, fields: [date, title] }, limit: 1000) {
         edges {
           node {
-            frontmatter {
-              slug
-            }
             slug
             id
           }
@@ -193,14 +181,14 @@ exports.createPages = async ({ graphql, actions, reporter }, themeOptions) => {
   }
 
   // Create Notes and Note pages.
-  const { allMdx } = result.data;
-  const notes = allMdx.edges;
+  const { allMdxNote } = result.data;
+  const notes = allMdxNote.edges;
 
   // Create a page for each Note
   notes.forEach(({ node: note }, index) => {
-    const { frontmatter, slug } = note;
+    const { slug } = note;
     createPage({
-      path: frontmatter.slug ?? slug,
+      path: slug,
       component: NoteTemplate,
       context: {
         id: note.id,

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 export default function RecentList() {
-  const { allMdx } = useStaticQuery(RecentListQuery);
+  const { allMdxNote } = useStaticQuery(RecentListQuery);
 
   return (
     <section>
@@ -16,7 +16,7 @@ export default function RecentList() {
         <h2 sx={{ variant: `title` }}>Recent Writing</h2>
       </Link>
       <Styled.ul>
-        {allMdx.edges.map(({ node }) => {
+        {allMdxNote.edges.map(({ node }) => {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
               <time
@@ -53,10 +53,7 @@ export default function RecentList() {
 
 const RecentListQuery = graphql`
   query {
-    allMdx(
-      sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
-      limit: 10
-    ) {
+    allMdxNote(sort: { fields: [date, title], order: DESC }, limit: 10) {
       edges {
         node {
           id

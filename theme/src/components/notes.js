@@ -8,7 +8,7 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 import formatTime from "../../utils/format-time";
 
-export default function Notes({ data: { allMdx } }) {
+export default function Notes({ data: { allMdxNote } }) {
   return (
     <Layout>
       <SEO
@@ -18,7 +18,7 @@ export default function Notes({ data: { allMdx } }) {
       <div className="note" sx={{ variant: `layout.notes` }}>
         <h2 sx={{ mt: 0 }}>Archives</h2>
         <Styled.ul>
-          {allMdx.edges.map(({ node }) => {
+          {allMdxNote.edges.map(({ node }) => {
             return (
               <li key={node.id} sx={{ mb: 4 }}>
                 <time
@@ -37,7 +37,7 @@ export default function Notes({ data: { allMdx } }) {
                     to={
                       node.frontmatter.link
                         ? node.frontmatter.link
-                        : node.frontmatter.slug
+                        : node.frontmatter.slug ?? node.slug
                     }
                     sx={{ variant: `links.underline` }}
                   >

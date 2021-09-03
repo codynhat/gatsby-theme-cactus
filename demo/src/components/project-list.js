@@ -6,7 +6,7 @@ import { Underline } from "@codynhat/gatsby-theme-cactus/src/components";
 import formatTime from "@codynhat/gatsby-theme-cactus/utils/format-time";
 
 export default function ProjectList() {
-  const { allMdx } = useStaticQuery(ProjectListQuery);
+  const { allMdxNote } = useStaticQuery(ProjectListQuery);
 
   return (
     <section>
@@ -14,7 +14,7 @@ export default function ProjectList() {
         <h2 sx={{ variant: `title` }}>Projects</h2>
       </Link>
       <Styled.ul>
-        {allMdx.edges.map(({ node }) => {
+        {allMdxNote.edges.map(({ node }) => {
           return (
             <li key={node.id} sx={{ mb: 2 }}>
               <Underline themeColor="text" hoverThemeColor="secondary">
@@ -36,8 +36,8 @@ export default function ProjectList() {
 
 const ProjectListQuery = graphql`
   query {
-    allMdx(
-      sort: { fields: [frontmatter___date, frontmatter___title], order: DESC }
+    allMdxNote(
+      sort: { fields: [date, title], order: DESC }
       filter: { frontmatter: { tags: { in: "project" } } }
     ) {
       edges {
