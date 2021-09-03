@@ -80,8 +80,8 @@ module.exports = {
             },
             query: `
             {
-              allMdx(
-                sort: { order: DESC, fields: [frontmatter___date] },
+              allMdxNote(
+                sort: { order: DESC, fields: [date] },
               ) {
                 edges {
                   node {

@@ -2,6 +2,7 @@ const fs = require(`fs`);
 const path = require(`path`);
 const mkdirp = require(`mkdirp`);
 const Debug = require(`debug`);
+const slugify = require(`slugify`);
 const {
   createFilePath,
   createRemoteFileNode,
@@ -118,14 +119,10 @@ exports.onCreateNode = async (
         slug = urlResolve(basePath, node.frontmatter.slug);
       }
     } else {
-      // otherwise use the filepath function from gatsby-source-filesystem
-      const filePath = createFilePath({
-        node: fileNode,
-        getNode,
-        basePath: contentPath,
-      });
-
-      slug = urlResolve(basePath, filePath);
+      slug = urlResolve(
+        basePath,
+        slugify(node.frontmatter.title, { lower: true })
+      );
     }
     // normalize use of trailing slash
     slug = slug.replace(/\/*$/, `/`);

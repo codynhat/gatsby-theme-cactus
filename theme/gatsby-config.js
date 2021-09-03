@@ -41,6 +41,7 @@ module.exports = (themeOptions) => {
               options: {
                 parseWikiLinks: true,
                 stripBrackets: true,
+                titleToURLPath: `${__dirname}/resolve-url.js`,
               },
             },
           ],
