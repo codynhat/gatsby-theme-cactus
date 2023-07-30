@@ -57,10 +57,11 @@ export default function Header() {
     PGP: faKey,
   };
   return (
-    <header sx={{ variant: `layout.header` }}>
+    <header sx={{ variant: `layout.header` }} class="h-card">
       <Link to="/" className="logo">
         <GatsbyImage
           image={colorMode == "dark" ? getImage(logoDark) : getImage(logoLight)}
+          class="u-photo" 
           alt="logo"
         />
       </Link>
@@ -68,7 +69,7 @@ export default function Header() {
         to="/"
         sx={{ variant: `links.secondary`, justifySelf: `flex-start` }}
       >
-        <h1>{title}</h1>
+        <h1 rel="me">{title}</h1>
       </Link>
       <nav sx={{ variant: `layout.nav` }}>
         {social.map((s) => (
