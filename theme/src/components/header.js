@@ -68,8 +68,9 @@ export default function Header() {
       <Link
         to="/"
         sx={{ variant: `links.secondary`, justifySelf: `flex-start` }}
+        class="u-url u-uid"
       >
-        <h1 rel="me">{title}</h1>
+        <h1>{title}</h1>
       </Link>
       <nav sx={{ variant: `layout.nav` }}>
         {social.map((s) => (
